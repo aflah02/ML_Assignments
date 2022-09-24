@@ -30,12 +30,13 @@ class LinearRegression:
         self.early_stopping_patience = early_stopping_patience
         self.early_stopping_delta = early_stopping_delta
         self.print_after = print_after
-        self.RMSEs = []
+        self.trainRMSEs = []
+        self.valRMSEs = []
 
     def get_params(self):
         return self.params
 
-    def fit(self, X, y):
+    def fit(self, X, y, X_val=None, y_val=None):
         self.params = self._initialize_params(X.shape[1])
         self.dataset_size = X.shape[0]
         ls_loss = []
@@ -44,7 +45,11 @@ class LinearRegression:
             loss = self._loss(y, y_hat)
             ls_loss.append(loss)
 
-            self.RMSEs.append(RMSE(y, y_hat))
+            self.trainRMSEs.append(RMSE(y, y_hat))
+
+            if X_val is not None and y_val is not None:
+                y_hat_val = self._forward(X_val)
+                self.valRMSEs.append(RMSE(y_val, y_hat_val))
 
             if self.early_stopping:
                 if EarlyStopping(ls_loss, self.early_stopping_patience, self.early_stopping_delta):
@@ -83,7 +88,10 @@ class LinearRegression:
     def predict(self, X):
         return self._forward(X)
 
-    def get_RMSEs(self):
-        return self.RMSEs
+    def get_trainRMSEs(self):
+        return self.trainRMSEs
+
+    def get_valRMSEs(self):
+        return self.valRMSEs
 
     

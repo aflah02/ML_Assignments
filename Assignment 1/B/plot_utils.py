@@ -8,8 +8,7 @@ def plot_RMSEs(RMSEs, title, x_label, y_label):
         title: Title of the plot
         x_label: Label for the x-axis
         y_label: Label for the y-axis
-        save_path: Path to save the plot
-        fileName: Name of the file to save the plot
+        split: Split of the data
     Returns:
         None
     """
