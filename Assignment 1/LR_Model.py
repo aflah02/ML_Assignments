@@ -94,11 +94,11 @@ class LinearRegression:
     
     def _loss(self, y, y_hat):
         if self.regularization == "Ridge":
-            return MSE(y, y_hat) + self.reg_lambda * np.sum(self.params**2)
+            return MSE(y, y_hat)/self.dataset_size + self.reg_lambda * np.sum(self.params**2)
         elif self.regularization == "Lasso":
-            return MSE(y, y_hat) + self.reg_lambda * np.sum(np.abs(self.params))
+            return MSE(y, y_hat)/self.dataset_size + self.reg_lambda * np.sum(np.abs(self.params))
         else:
-            return MSE(y, y_hat)
+            return MSE(y, y_hat)/self.dataset_size
 
     def _initialize_params(self, n_features):
         # Initialize parameters based on the initialization method
