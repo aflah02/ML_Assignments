@@ -25,6 +25,22 @@ class dataset:
             dataset.append([x_coord, y_coord, choice])
         return np.array(dataset)
 
+class logicalOperatorDataset:
+    def __init__(self, operator):
+        self.operator = operator
+    
+    def get(self):
+        data_points = [[0,0], [0,1], [1,0], [1,1]]
+        dataset = []
+        for data_point in data_points:
+            if self.operator == 'AND':
+                dataset.append([data_point[0], data_point[1], data_point[0] and data_point[1]])
+            if self.operator == 'OR':
+                dataset.append([data_point[0], data_point[1], data_point[0] or data_point[1]])
+            if self.operator == 'XOR':
+                dataset.append([data_point[0], data_point[1], data_point[0] ^ data_point[1]])
+        return np.array(dataset)
+
 def plot_dataset(dataset, title):
     sns.set_style("whitegrid")
     plt.figure(figsize=(10, 10))
@@ -33,8 +49,7 @@ def plot_dataset(dataset, title):
     return plt
 
 class Perceptron:
-    def __init__(self, learning_rate=0.01, epochs=100, min_error_threshold=None):
-        self.learning_rate = learning_rate
+    def __init__(self, epochs=100, min_error_threshold=None):
         self.epochs = epochs
         self.min_error_threshold = min_error_threshold
         self.weights = None
@@ -91,9 +106,9 @@ class Perceptron:
         return np.dot(dataset[:2], weights) + bias
     
     def _backward(self, weights, bias, error, data_point, fixedBias):
-        weights += self.learning_rate * error * data_point[:2]
+        weights += error * data_point[:2]
         if not fixedBias:
-            bias += self.learning_rate * error
+            bias += error
         return weights, bias
 
     def _activation(self, x):
