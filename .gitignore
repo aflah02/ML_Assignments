@@ -1,3 +1,12 @@
 Assignment 2/__pycache__/utils.cpython-39.pyc
 Assignment 2/BitcoinHeistData.csv
 Assignment 2/2020082_HW2.zip
+Assignment 3/MNIST Data/train-labels.idx1-ubyte
+Assignment 3/MNIST Data/train-images.idx3-ubyte
+Assignment 3/MNIST Data/t10k-labels.idx1-ubyte
+Assignment 3/MNIST Data/t10k-images.idx3-ubyte
+Assignment 3/Model_Saves/mlp_tanh.sav
+Assignment 3/Model_Saves/mlp_sigmoid.sav
+Assignment 3/Model_Saves/mlp_relu.sav
+Assignment 3/Model_Saves/mlp_linear.sav
+Assignment 3/__pycache__
