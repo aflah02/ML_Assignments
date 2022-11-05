@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import struct
+import matplotlib.pyplot as plt
 
 def load_mnist():
     train_image_path = r"MNIST Data\train-images.idx3-ubyte"
@@ -14,7 +15,7 @@ def load_mnist():
         train_data = np.fromfile(f, dtype=np.dtype(np.uint8).newbyteorder('>'))
         train_data = train_data.reshape((size, nrows * ncols))
     with open(train_label_path, 'rb') as f:
-        magic, size = struct.unpack(">II", f.read(8))
+        _, size = struct.unpack(">II", f.read(8))
         train_labels = np.fromfile(f, dtype=np.dtype(np.uint8).newbyteorder('>'))
         train_labels = train_labels.reshape((size,))
     # Load testing data
@@ -28,6 +29,25 @@ def load_mnist():
         test_labels = np.fromfile(f, dtype=np.dtype(np.uint8).newbyteorder('>'))
         test_labels = test_labels.reshape((size,))
     return train_data, train_labels, test_data, test_labels
+
+def plot_curves(mlp):
+    # Train and Validation Loss Curves
+    plt.figure(figsize=[8,6])
+    plt.plot(mlp.loss_curve_, 'r', linewidth=3.0)
+    plt.legend(['Training Loss'], fontsize=18)
+    plt.xlabel('Iteration', fontsize=16)
+    plt.ylabel('Loss', fontsize=16)
+    plt.title('Loss Curves', fontsize=16)
+    plt.show()
+
+    # Train and Validation Accuracy Curves
+    plt.figure(figsize=[8,6])
+    plt.plot(mlp.validation_scores_, 'b', linewidth=3.0)
+    plt.legend(['Validation Accuracy'], fontsize=18)
+    plt.xlabel('Iteration', fontsize=16)
+    plt.ylabel('Accuracy', fontsize=16)
+    plt.title('Accuracy Curves', fontsize=16)
+    plt.show()
 
 if __name__ == "__main__":
     train_data, train_labels, test_data, test_labels = load_mnist()
