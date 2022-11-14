@@ -30,23 +30,10 @@ def load_mnist():
         test_labels = test_labels.reshape((size,))
     return train_data, train_labels, test_data, test_labels
 
-def plot_curves(mlp):
-    # Train and Validation Loss Curves
-    plt.figure(figsize=[8,6])
-    plt.plot(mlp.loss_curve_, 'r', linewidth=3.0)
-    plt.legend(['Training Loss'], fontsize=18)
-    plt.xlabel('Iteration', fontsize=16)
-    plt.ylabel('Loss', fontsize=16)
-    plt.title('Loss Curves', fontsize=16)
-    plt.show()
-
-    # Train and Validation Accuracy Curves
-    plt.figure(figsize=[8,6])
-    plt.plot(mlp.validation_scores_, 'b', linewidth=3.0)
-    plt.legend(['Validation Accuracy'], fontsize=18)
-    plt.xlabel('Iteration', fontsize=16)
-    plt.ylabel('Accuracy', fontsize=16)
-    plt.title('Accuracy Curves', fontsize=16)
+def plot_curves(ls_train_loss,ls_val_loss):
+    plt.plot(ls_train_loss, label='train loss')
+    plt.plot(ls_val_loss, label='val loss')
+    plt.legend()
     plt.show()
 
 if __name__ == "__main__":
